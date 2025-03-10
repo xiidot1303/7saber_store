@@ -1,0 +1,37 @@
+from django.urls import path, re_path
+from django.contrib.auth.views import (
+    LoginView, 
+    LogoutView, 
+    PasswordChangeDoneView, 
+    PasswordChangeView
+)
+
+from app.views import (
+    main
+)
+from app.views.product import CategoryListView, SubcategoryListView, ProductListView, ProductDetailView
+
+urlpatterns = [
+    # login
+    path('accounts/login/', LoginView.as_view()),
+    path('changepassword/', PasswordChangeView.as_view(
+        template_name = 'registration/change_password.html'), name='editpassword'),
+    path('changepassword/done/', PasswordChangeDoneView.as_view(
+        template_name = 'registration/afterchanging.html'), name='password_change_done'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+
+    # files
+    re_path(r'^files/(?P<path>.*)$', main.get_file),
+
+    # category list API
+    path('api/categories/', CategoryListView.as_view(), name='category-list'),
+
+    # subcategory list API
+    path('api/subcategories/<int:category_id>/', SubcategoryListView.as_view(), name='subcategory-list'),
+
+    # product list API
+    path('api/products/<int:subcategory_id>/', ProductListView.as_view(), name='product-list'),
+
+    # product detail API
+    path('api/product/<int:product_id>/', ProductDetailView.as_view(), name='product-detail'),
+]
