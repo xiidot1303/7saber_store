@@ -55,6 +55,10 @@ class ProductDetailView(APIView):
 
                 product_data['colors'].append(color_data)
 
+            product_data['name_uz'] = product.name_uz
+            product_data['name_ru'] = product.name_ru
+            product_data['name_en'] = product.name_en
+
             return Response(product_data, status=status.HTTP_200_OK)
         except Product.DoesNotExist:
             return Response({'error': 'Product not found'}, status=status.HTTP_404_NOT_FOUND)

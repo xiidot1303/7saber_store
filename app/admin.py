@@ -2,12 +2,12 @@ from django.contrib import admin
 from .models import Category, Subcategory, Product, ProductColor, ProductSize
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'description')
-    search_fields = ('name',)
+    list_display = ('name', 'name_uz', 'name_ru', 'name_en', 'description')
+    search_fields = ('name', 'name_uz', 'name_ru', 'name_en')
 
 class SubcategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'category', 'description')
-    search_fields = ('name', 'category__name')
+    list_display = ('name', 'name_uz', 'name_ru', 'name_en', 'category', 'description')
+    search_fields = ('name', 'name_uz', 'name_ru', 'name_en', 'category__name')
     list_filter = ('category',)
 
 class ProductSizeInline(admin.TabularInline):
@@ -20,8 +20,8 @@ class ProductColorInline(admin.TabularInline):
     inlines = [ProductSizeInline]
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'subcategory', 'price', 'discount_price', 'articule', 'short_description')
-    search_fields = ('name', 'articule', 'subcategory__name')
+    list_display = ('name', 'name_uz', 'name_ru', 'name_en', 'subcategory', 'price', 'discount_price', 'articule', 'short_description')
+    search_fields = ('name', 'name_uz', 'name_ru', 'name_en', 'articule', 'subcategory__name')
     list_filter = ('subcategory',)
     inlines = [ProductColorInline]
 

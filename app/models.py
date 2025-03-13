@@ -2,6 +2,9 @@ from django.db import models
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
+    name_uz = models.CharField(max_length=255, blank=True, null=True)
+    name_ru = models.CharField(max_length=255, blank=True, null=True)
+    name_en = models.CharField(max_length=255, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
 
     def __str__(self):
@@ -10,6 +13,9 @@ class Category(models.Model):
 class Subcategory(models.Model):
     category = models.ForeignKey(Category, related_name='subcategories', on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
+    name_uz = models.CharField(max_length=255, blank=True, null=True)
+    name_ru = models.CharField(max_length=255, blank=True, null=True)
+    name_en = models.CharField(max_length=255, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
 
     def __str__(self):
@@ -18,6 +24,9 @@ class Subcategory(models.Model):
 class Product(models.Model):
     subcategory = models.ForeignKey(Subcategory, related_name='products', on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
+    name_uz = models.CharField(max_length=255, blank=True, null=True)
+    name_ru = models.CharField(max_length=255, blank=True, null=True)
+    name_en = models.CharField(max_length=255, blank=True, null=True)
     photo = models.FileField(upload_to='products/', null=True)
     price = models.DecimalField(max_digits=10, decimal_places=0, null=True)
     discount_price = models.DecimalField(max_digits=10, decimal_places=0, blank=True, null=True)    
