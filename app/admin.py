@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Subcategory, Product, ProductColor, ProductSize, DeliveryType
+from .models import Category, Subcategory, Product, ProductColor, ProductSize, DeliveryType, Customer, Order, OrderItem
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'name_uz', 'name_ru', 'name_en', 'description')
@@ -40,9 +40,25 @@ class DeliveryTypeAdmin(admin.ModelAdmin):
     list_display = ('title_uz', 'title_ru', 'title_en', 'price')
     search_fields = ('title_uz', 'title_ru', 'title_en')
 
+class CustomerAdmin(admin.ModelAdmin):
+    list_display = ('first_name', 'phone', 'address')
+    search_fields = ('first_name', 'phone', 'address')
+
+class OrderItemInline(admin.TabularInline):
+    model = OrderItem
+    extra = 1
+
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ('id', 'customer', 'delivery_type', 'payment_method', 'subtotal', 'delivery_price', 'total', 'created_at')
+    search_fields = ('customer__first_name', 'delivery_type__title_en', 'payment_method')
+    list_filter = ('delivery_type', 'payment_method', 'created_at')
+    inlines = [OrderItemInline]
+
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Subcategory, SubcategoryAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(ProductColor, ProductColorAdmin)
 admin.site.register(ProductSize, ProductSizeAdmin)
 admin.site.register(DeliveryType, DeliveryTypeAdmin)
+admin.site.register(Customer, CustomerAdmin)
+admin.site.register(Order, OrderAdmin)
