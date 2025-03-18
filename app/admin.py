@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Subcategory, Product, ProductColor, ProductSize
+from .models import Category, Subcategory, Product, ProductColor, ProductSize, DeliveryType
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'name_uz', 'name_ru', 'name_en', 'description')
@@ -36,8 +36,13 @@ class ProductSizeAdmin(admin.ModelAdmin):
     search_fields = ('product_color__product__name', 'size')
     list_filter = ('product_color__product', 'size')
 
+class DeliveryTypeAdmin(admin.ModelAdmin):
+    list_display = ('title_uz', 'title_ru', 'title_en', 'price')
+    search_fields = ('title_uz', 'title_ru', 'title_en')
+
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Subcategory, SubcategoryAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(ProductColor, ProductColorAdmin)
 admin.site.register(ProductSize, ProductSizeAdmin)
+admin.site.register(DeliveryType, DeliveryTypeAdmin)

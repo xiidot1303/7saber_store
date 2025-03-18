@@ -1,7 +1,5 @@
 from rest_framework import serializers
-from app.models import Category
-from app.models import Subcategory
-from app.models import Product
+from app.models import Category, Subcategory, Product, DeliveryType
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -18,3 +16,8 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = ['id', 'name', 'name_uz', 'name_ru', 'name_en', 'photo', 'description', 'short_description', 'articule', 'subcategory', 'price', 'discount_price']
         depth = 1
+
+class DeliveryTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DeliveryType
+        fields = ['id', 'title_uz', 'title_ru', 'title_en', 'price']

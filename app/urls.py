@@ -10,6 +10,8 @@ from app.views import (
     main
 )
 from app.views.product import CategoryListView, SubcategoryListView, ProductListView, ProductDetailView
+from app.views.order import OrderView
+from app.views.delivery import DeliveryTypeListView
 
 urlpatterns = [
     # login
@@ -34,4 +36,10 @@ urlpatterns = [
 
     # product detail API
     path('api/product/<int:product_id>/', ProductDetailView.as_view(), name='product-detail'),
+
+    # order API
+    path('api/order/', OrderView.as_view(), name='order'),
+
+    # delivery types API
+    path('api/delivery-types/', DeliveryTypeListView.as_view(), name='delivery-type-list'),
 ]
