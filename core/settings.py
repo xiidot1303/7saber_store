@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'app.apps.app',
     'bot.apps.bot',
     'jazzmin',
+    'django_db_geventpool',
     'django_apscheduler',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -55,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.gzip.GZipMiddleware',  # Added GZipMiddleware
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
@@ -88,25 +90,29 @@ ASGI_APPLICATION = 'core.asgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+from psycogreen.gevent import patch_psycopg
+patch_psycopg()
 
-if not DEBUG:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql_psycopg2",
-            "NAME": DB_NAME,
-            "USER": DB_USER,
-            "PASSWORD": DB_PASSWORD,
-            "HOST": DB_HOST,
-            "PORT": DB_PORT,
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django_db_geventpool.backends.postgresql_psycopg2",
+        # "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": DB_NAME,
+        "USER": DB_USER,
+        "PASSWORD": DB_PASSWORD,
+        "HOST": DB_HOST,
+        "PORT": DB_PORT,
+        'ATOMIC_REQUESTS': False,
+        'CONN_MAX_AGE': 600,  # Set to a positive value for persistent connections
+        "OPTIONS": {
+            "isolation_level": "repeatable read",
+            'MAX_CONNS': 50,  # Increased for a large project
+            'REUSE_CONNS': 10  # Reasonable starting point for connection reuse
         }
     }
-else:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
-    }
+}
+
 
 
 # Password validation
@@ -176,4 +182,20 @@ CACHES = {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
         }
     }
+}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django_db_geventpool': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
+    },
 }
