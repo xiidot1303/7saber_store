@@ -58,7 +58,7 @@ def fetch_products():
         page += 1
 
 def fetch_subcategories():
-    url = "https://api-admin.billz.ai/v2/categories"
+    url = "https://api-admin.billz.ai/v2/category"
     access_token = cache.get("billz_access_token") or fetch_and_cache_access_token()
     headers = {"Authorization": f"Bearer {access_token}"}
     response = requests.get(url, headers=headers)
