@@ -31,6 +31,7 @@ def fetch_products():
                 subcategory_id = product['categories'][0]['id']
                 name = product.get("name").split("/")[0].strip()
                 price = product['shop_prices'][0]['retail_price']
+                quantity = product['shop_measurement_values'][0]['active_measurement_value']
                 if product_attributes:=product['product_attributes']:
                     if product_attributes[0]['attribute_id'] == '146af27e-edae-44ec-84fd-f6439fbb065d':
                         size = product_attributes[0]['attribute_value']
@@ -51,6 +52,7 @@ def fetch_products():
                 product_color.save()
 
                 product_size, is_created = ProductSize.objects.get_or_create(product_color=product_color, size=size)
+                product_size.quantity = quantity
                 product_size.save()
 
         else:
