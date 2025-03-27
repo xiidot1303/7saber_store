@@ -30,13 +30,13 @@ class ProductDetailView(APIView):
         try:
             product = Product.objects.get(id=product_id)
             product_data = ProductSerializer(product).data
-            product_data['photo'] = request.build_absolute_uri(quote(product.photo.url))
+            product_data['photo'] = request.build_absolute_uri(product.photo.url)  # Corrected URL formatting
             product_data['colors'] = []
 
             for color in product.colors.all():
                 color_data = {
                     'id': color.id,
-                    'photo': request.build_absolute_uri(quote(color.photo.url)),
+                    'photo': request.build_absolute_uri(color.photo.url),  # Corrected URL formatting
                     'color': color.color,
                     'price': color.price,
                     'discount_price': color.discount_price,
