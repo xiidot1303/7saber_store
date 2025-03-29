@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 from config import DEBUG
 
 urlpatterns = [
-    path("webhook1303", botwebhook.BotWebhookView.as_view())
+    path("webhook1303/", botwebhook.BotWebhookView.as_view())
 ]
 
 if DEBUG:
