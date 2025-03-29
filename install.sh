@@ -62,7 +62,7 @@ sudo certbot --nginx
 
 sudo service nginx reload
 
-curl "https://api.telegram.org/bot$bot_token/setWebhook?url=https://$domain/$bot_token"
+curl "https://api.telegram.org/bot$bot_token/setWebhook?url=https://$domain/webhook1303"
 
 
 echo "Installation complete"
