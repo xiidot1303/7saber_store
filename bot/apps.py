@@ -13,9 +13,3 @@ class bot(AppConfig):
             save_langs_to_redis()
         except:
             None
-        # run_once = os.environ.get('CMDLINERUNNER_RUN_ONCE_BOT')
-        # if run_once is not None:
-        #     return
-        # os.environ['CMDLINERUNNER_RUN_ONCE_BOT'] = 'True'
-        from bot.scheduled_job.updater import jobs
-        jobs.scheduler.start()
