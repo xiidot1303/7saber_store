@@ -26,7 +26,7 @@ class OrderView(APIView):
 
         # get bot user
         
-        bot_user = Bot_user.objects.filter(id=bot_user_id).first()
+        bot_user = Bot_user.objects.filter(user_id=bot_user_id).first() if bot_user_id else None
         
         # Create order
         delivery_type = DeliveryType.objects.get(id=delivery_type_id)
