@@ -41,5 +41,5 @@ urlpatterns = [
     path('api/order/', OrderView.as_view(), name='order'),
 
     # delivery types API
-    path('api/delivery-types/', DeliveryTypeListView.as_view(), name='delivery-type-list'),
+    path('api/deliverytypes/', DeliveryTypeListView.as_view(), name='delivery-type-list'),
 ]
