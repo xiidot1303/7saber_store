@@ -2,11 +2,13 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from app.models import Customer, Order, OrderItem, DeliveryType, Product, ProductColor, ProductSize
+from bot.models import Bot_user
 
 class OrderView(APIView):
     def post(self, request, *args, **kwargs):
         data = request.data
         customer_data = data.get('customer')
+        bot_user_id = data.get('user_id', None)
         items_data = data.get('items')
         delivery_type_id = data.get('deliveryType')
         payment_method = data.get('paymentMethod')
@@ -22,9 +24,14 @@ class OrderView(APIView):
             address=customer_data['address']
         )
 
+        # get bot user
+        
+        bot_user = Bot_user.objects.filter(id=bot_user_id).first()
+        
         # Create order
         delivery_type = DeliveryType.objects.get(id=delivery_type_id)
         order = Order.objects.create(
+            bot_user=bot_user,
             customer=customer,
             delivery_type=delivery_type,
             payment_method=payment_method,

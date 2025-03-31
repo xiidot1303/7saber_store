@@ -49,7 +49,7 @@ class OrderItemInline(admin.TabularInline):
     extra = 1
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'customer', 'delivery_type', 'payment_method', 'subtotal', 'delivery_price', 'total', 'created_at')
+    list_display = ('id', 'bot_user', 'customer', 'delivery_type', 'payment_method', 'subtotal', 'delivery_price', 'total', 'created_at')
     search_fields = ('customer__first_name', 'delivery_type__title_en', 'payment_method')
     list_filter = ('delivery_type', 'payment_method', 'created_at')
     inlines = [OrderItemInline]

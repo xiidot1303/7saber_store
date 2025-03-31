@@ -77,6 +77,7 @@ class Customer(models.Model):
         return self.first_name
 
 class Order(models.Model):
+    bot_user = models.ForeignKey('bot.Bot_user', null=True, blank=True, on_delete=models.CASCADE)
     customer = models.ForeignKey(Customer, related_name='orders', on_delete=models.CASCADE)
     delivery_type = models.ForeignKey(DeliveryType, on_delete=models.CASCADE)
     payment_method = models.CharField(max_length=50)
