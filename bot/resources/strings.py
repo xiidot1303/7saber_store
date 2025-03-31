@@ -75,9 +75,9 @@ class Strings:
         "Каталог"
     ]
 
-    _ = [
-        "",
-        ""
+    open_catalog = [
+        "Katalogni ochish",
+        "Открыть каталог"
     ]
 
     _ = [

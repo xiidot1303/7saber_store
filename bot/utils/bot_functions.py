@@ -10,7 +10,8 @@ from telegram import (
     ReplyKeyboardRemove,
     Bot,
     Update,
-    WebAppInfo
+    WebAppInfo,
+    WebAppData,
 )
 from telegram.constants import (
     ParseMode, 

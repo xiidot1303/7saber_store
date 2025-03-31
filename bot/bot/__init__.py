@@ -23,15 +23,26 @@ async def main_menu(update: Update, context: CustomContext):
     update = update.callback_query if update.callback_query else update
     bot = context.bot
 
-    await bot.send_message(
-        update.message.chat_id,
-        context.words.main_menu,
-    )
 
     await check_username(update)
 
     bot_user: Bot_user = await get_object_by_update(update)
     webapp = WebAppInfo(url=f"{WEBAPP_URL}?user={bot_user.pk}")
+    markup = InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(
+                    text=context.words.open_catalog,
+                    web_app=webapp
+                )
+            ]
+        ]
+    )
+    await bot.send_message(
+        update.message.chat_id,
+        context.words.main_menu,
+        reply_markup=markup
+    )
     menu_button = MenuButtonWebApp(
         text=context.words.catalog,
         web_app=webapp
