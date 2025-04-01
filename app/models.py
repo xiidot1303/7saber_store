@@ -29,7 +29,8 @@ class Product(models.Model):
     name_uz = models.CharField(max_length=255, blank=True, null=True)
     name_ru = models.CharField(max_length=255, blank=True, null=True)
     name_en = models.CharField(max_length=255, blank=True, null=True)
-    photo = models.FileField(upload_to='products/', null=True)
+    # photo = models.FileField(upload_to='products/', null=True)
+    photo = models.CharField(max_length=255, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=0, null=True)
     discount_price = models.DecimalField(max_digits=10, decimal_places=0, blank=True, null=True)    
     description = models.TextField(null=True)
@@ -41,7 +42,8 @@ class Product(models.Model):
 
 class ProductColor(models.Model):
     product = models.ForeignKey(Product, related_name='colors', null=True, on_delete=models.CASCADE)
-    photo = models.FileField(upload_to='products/', null=True)
+    # photo = models.FileField(upload_to='products/', null=True)
+    photo = models.CharField(max_length=255, null=True)
     color = models.CharField(max_length=50, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=0, null=True)
     discount_price = models.DecimalField(max_digits=10, decimal_places=0, blank=True, null=True)

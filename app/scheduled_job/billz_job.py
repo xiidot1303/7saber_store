@@ -30,8 +30,14 @@ def fetch_products():
                 parent_id = product.get("parent_id")
                 subcategory_id = product['categories'][0]['id']
                 name = product.get("name").split("/")[0].strip()
+                main_photo = product.get("main_image_url_full")
                 price = product['shop_prices'][0]['retail_price']
                 quantity = product['shop_measurement_values'][0]['active_measurement_value']
+                photo = None
+                for p in product.get("photos"):
+                    if not p['is_main']:
+                        photo = p['photo_url']
+                        break
                 if product_attributes:=product['product_attributes']:
                     if product_attributes[0]['attribute_id'] == '146af27e-edae-44ec-84fd-f6439fbb065d':
                         size = product_attributes[0]['attribute_value']
@@ -45,10 +51,12 @@ def fetch_products():
                 product.subcategory = subcategory
                 product.name = name
                 product.price = price
+                product.photo = main_photo if main_photo else None
                 product.save()
 
                 product_color, is_created = ProductColor.objects.get_or_create(product=product, color=color)
                 product_color.price = price
+                product_color.photo = photo
                 product_color.save()
 
                 product_size, is_created = ProductSize.objects.get_or_create(product_color=product_color, size=size)
