@@ -51,12 +51,14 @@ def fetch_products():
                 product.subcategory = subcategory
                 product.name = name
                 product.price = price
-                product.photo = main_photo if main_photo else None
+                if main_photo:
+                    product.photo = main_photo
                 product.save()
 
                 product_color, is_created = ProductColor.objects.get_or_create(product=product, color=color)
                 product_color.price = price
-                product_color.photo = photo
+                if photo:
+                    product_color.photo = photo
                 product_color.save()
 
                 product_size, is_created = ProductSize.objects.get_or_create(product_color=product_color, size=size)
