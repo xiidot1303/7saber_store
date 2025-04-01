@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Subcategory, Product, ProductColor, ProductSize, DeliveryType, Customer, Order, OrderItem
+from .models import Category, Subcategory, Product, ProductColor, ProductSize, DeliveryType, Customer, Order, OrderItem, Banner
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'name_uz', 'name_ru', 'name_en', 'description')
@@ -54,6 +54,9 @@ class OrderAdmin(admin.ModelAdmin):
     list_filter = ('delivery_type', 'payment_method', 'created_at')
     inlines = [OrderItemInline]
 
+class BannerAdmin(admin.ModelAdmin):
+    list_display = ('id', 'photo')
+
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Subcategory, SubcategoryAdmin)
 admin.site.register(Product, ProductAdmin)
@@ -62,3 +65,4 @@ admin.site.register(ProductSize, ProductSizeAdmin)
 admin.site.register(DeliveryType, DeliveryTypeAdmin)
 admin.site.register(Customer, CustomerAdmin)
 admin.site.register(Order, OrderAdmin)
+admin.site.register(Banner, BannerAdmin)

@@ -100,3 +100,9 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return f"{self.product.name} - {self.color.color} - {self.size.size}"
+
+class Banner(models.Model):
+    photo = models.FileField(upload_to='banners/')
+
+    def __str__(self):
+        return f"Banner {self.id}"

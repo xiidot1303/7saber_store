@@ -12,6 +12,7 @@ from app.views import (
 from app.views.product import CategoryListView, SubcategoryListView, ProductListView, ProductDetailView
 from app.views.order import OrderView
 from app.views.delivery import DeliveryTypeListView
+from app.views.banner import BannerListView  # Add import
 
 urlpatterns = [
     # login
@@ -42,4 +43,7 @@ urlpatterns = [
 
     # delivery types API
     path('api/delivery-types/', DeliveryTypeListView.as_view(), name='delivery-type-list'),
+
+    # banner API
+    path('api/banners/', BannerListView.as_view(), name='banner-list'),
 ]

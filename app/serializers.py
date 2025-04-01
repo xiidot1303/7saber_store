@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from app.models import Category, Subcategory, Product, DeliveryType
+from app.models import Category, Subcategory, Product, DeliveryType, Banner
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -21,3 +21,8 @@ class DeliveryTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = DeliveryType
         fields = ['id', 'title_uz', 'title_ru', 'title_en', 'price']
+
+class BannerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Banner
+        fields = ['id', 'photo']
