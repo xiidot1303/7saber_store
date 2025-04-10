@@ -29,3 +29,9 @@ PAYME_CASH_ID = os.environ.get("PAYME_CASH_ID")
 PAYME_KEY = os.environ.get("PAYME_KEY")
 PAYME_TEST_KEY = os.environ.get("PAYME_TEST_KEY")
 PAYME_CHECKOUT_URL = os.environ.get("PAYME_CHECKOUT_URL")
+
+# Click
+CLICK_SERVICE_ID = os.environ.get("CLICK_SERVICE_ID")
+CLICK_MERCHANT_ID = os.environ.get("CLICK_MERCHANT_ID")
+CLICK_SECRET_KEY = os.environ.get("CLICK_SECRET_KEY")
+CLICK_MERCHANT_USER_ID = os.environ.get("CLICK_MERCHANT_USER_ID")

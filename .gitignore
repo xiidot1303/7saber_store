@@ -25,3 +25,4 @@ enter_server.sh
 !payment/services/__init__.py
 !payment/resources/__init__.py
 !payment/utils/__init__.py
+!payment/services/click/__init__.py

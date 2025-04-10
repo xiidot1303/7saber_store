@@ -34,6 +34,8 @@ CSRF_TRUSTED_ORIGINS = CSRF_TRUSTED_ORIGINS
 INSTALLED_APPS = [
     'app.apps.app',
     'bot.apps.bot',
+    'payment',
+    'payments',
     'jazzmin',
     'django_db_geventpool',
     'django_apscheduler',
@@ -205,4 +207,21 @@ LOGGING = {
             'level': 'DEBUG',
         },
     },
+}
+
+
+# PAYMENT
+
+PAYMENT_HOST = CSRF_TRUSTED_ORIGINS[0]
+PAYMENT_USES_SSL = False # set the True value if you are using the SSL
+PAYMENT_MODEL = 'app.Order' 
+# payment model format like this :: '<app_name>.<model_name>'
+# add "click" to your variants
+PAYMENT_VARIANTS = {
+    'click' : ('click.ClickProvider', {
+        'merchant_id' : CLICK_MERCHANT_ID,
+        'merchant_service_id' : CLICK_SERVICE_ID,
+        'merchant_user_id' : CLICK_MERCHANT_USER_ID,
+        'secret_key' : CLICK_SECRET_KEY
+    })
 }

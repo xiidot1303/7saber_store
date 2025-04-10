@@ -28,6 +28,8 @@ django-apscheduler==0.6.2
 django-cors-headers==4.3.1
 django-db-geventpool==4.0.8
 django-jazzmin==3.0.0
+django-payments==2.0.0
+django-phonenumber-field==8.0.0
 django-redis==5.4.0
 djangorestframework==3.15.1
 exceptiongroup==1.2.1
@@ -49,6 +51,7 @@ multidict==6.1.0
 packaging==24.0
 parso==0.8.4
 pexpect==4.9.0
+phonenumberslite==9.0.2
 pipenv==2023.12.1
 platformdirs==4.2.2
 prompt-toolkit==3.0.43
