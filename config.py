@@ -23,3 +23,9 @@ WEBAPP_URL = os.environ.get("WEBAPP_URL")
 
 # BILLZ
 BILLZ_SECRET_TOKEN = os.environ.get("BILLZ_SECRET_TOKEN")
+
+# Payme
+PAYME_CASH_ID = os.environ.get("PAYME_CASH_ID")
+PAYME_KEY = os.environ.get("PAYME_KEY")
+PAYME_TEST_KEY = os.environ.get("PAYME_TEST_KEY")
+PAYME_CHECKOUT_URL = os.environ.get("PAYME_CHECKOUT_URL")
