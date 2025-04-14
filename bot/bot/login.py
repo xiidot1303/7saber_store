@@ -73,7 +73,7 @@ async def get_name(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def get_contact(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.message.text == Strings(user_id=update.effective_user.id).back:
-        return await _to_the_get_name(update, context)
+        return await _to_the_get_name(update)
 
     if update.message.contact is None or not update.message.contact:
         phone_number = update.message.text
