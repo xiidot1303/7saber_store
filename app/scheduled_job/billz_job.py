@@ -31,8 +31,20 @@ def fetch_products():
                 subcategory_id = product['categories'][0]['id']
                 name = product.get("name").split("/")[0].strip()
                 main_photo = product.get("main_image_url_full")
-                price = product['shop_prices'][0]['retail_price']
                 quantity = product['shop_measurement_values'][0]['active_measurement_value']
+                # get price
+                for shop_price in product.get("shop_prices", []):
+                    if shop_price['shop_id'] == "e522e356-c449-4e33-8ad3-b7177622ef7a":
+                        price = shop_price['retail_price']
+                        break
+                
+                # get mxik and package code
+                for custom_field in product.get("custom_fields", []):
+                    if custom_field["custom_field_id"] == "6d903c74-bee3-48d8-8ca8-d2344df1ffd7":
+                        mxik = custom_field["custom_field_value"]
+                    elif custom_field["custom_field_id"] == "f9a0e2a8-9d5e-4059-ac32-76a9c5ae1656":
+                        package_code = custom_field["custom_field_value"]
+
                 photo = None
                 for p in product.get("photos"):
                     if not p['is_main']:
@@ -51,6 +63,8 @@ def fetch_products():
                 product.subcategory = subcategory
                 product.name = name
                 product.price = price
+                product.mxik = mxik
+                product.package_code = package_code
                 if main_photo:
                     product.photo = main_photo
                 product.save()
