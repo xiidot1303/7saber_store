@@ -83,7 +83,7 @@ def fetch_products():
             break
         page += 1
 
-def fetch_subcategories():
+def fetch_categories():
     url = "https://api-admin.billz.ai/v2/category"
     access_token = cache.get("billz_access_token") or fetch_and_cache_access_token()
     headers = {"Authorization": f"Bearer {access_token}"}
@@ -91,12 +91,17 @@ def fetch_subcategories():
     response_data = response.json()
     categories = response_data.get("categories", [])
     
-    subcategories = []
-    existing_billz_ids = set(Subcategory.objects.values_list('billz_id', flat=True))
     for category in categories:
-        billz_id = category.get("id")
-        name = category.get("name")
-        if billz_id not in existing_billz_ids:
-            subcategories.append(Subcategory(billz_id=billz_id, name=name))
-    
-    Subcategory.objects.bulk_create(subcategories)
+        category_id = category.get("id")
+        category: Category = Category.objects.get_or_create(billz_id=category_id)
+        category.name = category.get("name")
+        category.save()
+
+        for subcategory in category.get("subRows", []):
+            subcategory_id = subcategory.get("id")
+            subcategory: Subcategory = Subcategory.objects.get_or_create(billz_id=subcategory_id)
+            subcategory.category = category
+            subcategory.name = subcategory.get("name")
+            subcategory.save()
+
+        

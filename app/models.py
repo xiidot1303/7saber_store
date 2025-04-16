@@ -1,6 +1,7 @@
 from django.db import models
 
 class Category(models.Model):
+    billz_id = models.CharField(max_length=128, null=True)
     name = models.CharField(max_length=255)
     name_uz = models.CharField(max_length=255, blank=True, null=True)
     name_ru = models.CharField(max_length=255, blank=True, null=True)
