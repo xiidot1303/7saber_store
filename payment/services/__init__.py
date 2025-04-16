@@ -1,6 +1,7 @@
 from app.services.order_service import (
     get_order_by_id as get_account_by_id,
-    order_pay as account_pay
+    order_pay as account_pay,
+    get_order_items_list_by_order_id as get_items_by_account_id,
 )
 from bot.services import notification_service as notify
 from app.models import Order as Account

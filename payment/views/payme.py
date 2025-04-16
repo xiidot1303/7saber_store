@@ -11,6 +11,7 @@ from config import PAYME_KEY, PAYME_TEST_KEY
 
 
 class Endpoint(APIView):
+    authentication_classes = []
     async def set_data(self, request: AsyncRequest):
         self.data: dict = request.data
         self.request_headers = request.headers
@@ -42,7 +43,7 @@ class Endpoint(APIView):
         if method == "CheckPerformTransaction":
             amount, account_id = params["amount"], params["account"]["account_id"]
             result, error = await CheckPerformTransaction(
-                amount, account_id)
+                amount, account_id, self.test)
         if method == "CreateTransaction":
             payme_trans_id = params["id"]
             time = params["time"]
@@ -86,7 +87,6 @@ class Endpoint(APIView):
         return await self.create_response()
 
     async def post(self, request: AsyncRequest, *args, **kwargs):
-        print(request)
         try:
             # make ready
             await self.set_data(request)

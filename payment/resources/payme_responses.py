@@ -71,70 +71,97 @@ class Errors:
         }
     }
 
+
 class Results:
-    async def CHECKPERFORM_TRANSACTION():
+    async def CHECKPERFORM_TRANSACTION(account, items: list, test=False):
         r = {
-            "allow": True
+            "allow": True,
+            "detail": {
+                "receipt_type": 0,
+                "shipping": {  # доставка, необязательное поле
+                    "title": "Доставка",
+                    "price": int(account.delivery_price)*100
+                },
+                "items": [  # товарная позиция, обязательное поле для фискализации
+                    {
+                        # нааименование товара или услуги
+                        "title": item.get("product__name"),
+                        # цена за единицу товара или услуги, сумма указана в тийинах
+                        "price": int(item.get("price"))*100,
+                        # кол-во товаров или услуг
+                        "count": item.get("quantity"),
+                        # код * ИКПУ обязательное поле
+                        "code": item.get("product__mxik"),
+                        # обязательное поле, процент уплачиваемого НДС для данного товара или услуги
+                        "vat_percent": 0,
+                        # Код упаковки для конкретного товара или услуги, содержится на сайте в деталях найденного ИКПУ.
+                        "package_code": item.get("product__package_code"),
+                    }
+                    for item in items
+                ]
+            }
         }
+        # if test:
+        #     r.pop('detail')
         return r
-    
+
     async def CREATE_TRANSACTION(create_time, transaction, state):
         r = {
-            "create_time" : create_time,
-            "transaction" : transaction,
-            "state" : state
+            "create_time": create_time,
+            "transaction": transaction,
+            "state": state
         }
         return r
-    
+
     async def PERFORM_TRANSACTION(transaction, perform_time, state):
         r = {
-            "transaction" : transaction,
-            "perform_time" : perform_time,
-            "state" : state
+            "transaction": transaction,
+            "perform_time": perform_time,
+            "state": state
         }
         return r
-    
+
     async def CANCEL_TRANSACTION(transaction, cancel_time, state):
         r = {
-            "transaction" : transaction,
-            "cancel_time" : cancel_time,
-            "state" : state
+            "transaction": transaction,
+            "cancel_time": cancel_time,
+            "state": state
         }
         return r
-    
+
     async def CHECK_TRANSACTION(create_time, perform_time, cancel_time, transaction, state, reason):
         r = {
-            "create_time" : create_time,
-            "perform_time" : perform_time,
-            "cancel_time" : cancel_time,
-            "transaction" : transaction,
-            "state" : state,
-            "reason" : reason
+            "create_time": create_time,
+            "perform_time": perform_time,
+            "cancel_time": cancel_time,
+            "transaction": transaction,
+            "state": state,
+            "reason": reason
         }
         return r
-    
+
     async def GET_STATEMENT(transactions_filter: dict):
         from payment.models import Payme_transaction
         r = {
-            "transactions" : [
+            "transactions": [
                 {
-                    "id" : transaction.payme_trans_id,
-                    "time" : transaction.time,
-                    "amount" : transaction.amount,
-                    "account" : {
-                        "account_id" : transaction.account_id
+                    "id": transaction.payme_trans_id,
+                    "time": transaction.time,
+                    "amount": transaction.amount,
+                    "account": {
+                        "account_id": transaction.account_id
                     },
-                    "create_time" : transaction.create_time,
-                    "perform_time" : transaction.perform_time,
-                    "cancel_time" : transaction.cancel_time,
-                    "transaction" : str(transaction.id),
-                    "state" : transaction.state,
-                    "reason" : transaction.reason,
+                    "create_time": transaction.create_time,
+                    "perform_time": transaction.perform_time,
+                    "cancel_time": transaction.cancel_time,
+                    "transaction": str(transaction.id),
+                    "state": transaction.state,
+                    "reason": transaction.reason,
                     # "receivers" : [
-                        # {
-                        #     "id" : "5305e3bab097f420a62ced0b",
-                        #     "amount" : 200000
-                        # },
+                    # {
+                    #     "id" : "5305e3bab097f420a62ced0b",
+                    #     "amount" : 200000
+                    # },
                     # ]
                 }
                 async for transaction in Payme_transaction.objects.filter(**transactions_filter)

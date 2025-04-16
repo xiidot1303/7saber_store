@@ -55,6 +55,5 @@ async def cancel_transaction(obj: Trans, state: int, reason: int):
 async def filter_transactions_by_createtime_period(from_, to) -> dict:
     filter_dict = {
         "create_time__range": (from_, to),
-        "test": False
     }
     return filter_dict

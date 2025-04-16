@@ -4,6 +4,7 @@ db.sqlite3
 __pycache__/
 app/migrations
 bot/migrations
+payment/migrations
 **/__init__.py
 __init__.py
 files

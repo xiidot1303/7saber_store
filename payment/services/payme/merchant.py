@@ -6,14 +6,15 @@ import logging
 from bot.control.updater import application
 
 
-async def CheckPerformTransaction(amount, account_id):
+async def CheckPerformTransaction(amount, account_id, test):
     if account := await get_account_by_id(account_id):
         if trans_obj := await get_active_transaction_by_account_id(account_id):
             return None, Errors.ACCOUNT_NOT_FOUND
-        if int(amount) / 100 != int(account.amount):
+        if int(amount) / 100 != int(account.total):
             return None, Errors.INCORRECT_AMOUNT
-
-        return await Results.CHECKPERFORM_TRANSACTION(), None
+        account: Account
+        items = await get_items_by_account_id(account.id)
+        return await Results.CHECKPERFORM_TRANSACTION(account, items, test), None
     else:
         return None, Errors.ACCOUNT_NOT_FOUND
 
@@ -26,7 +27,7 @@ async def CreateTransaction(id, time, amount, account_id, test):
             trans_obj: Trans
             if trans_obj.payme_trans_id != id:
                 return None, Errors.ACCOUNT_NOT_FOUND
-        if int(amount) / 100 != int(account.amount):
+        if int(amount) / 100 != int(account.total):
             return None, Errors.INCORRECT_AMOUNT
         trans_obj = await get_or_create_transaction(
             id, account, amount/100, await time_ts(), time, test)

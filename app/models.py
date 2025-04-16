@@ -36,6 +36,8 @@ class Product(models.Model):
     description = models.TextField(null=True)
     short_description = models.CharField(max_length=255, null=True)
     articule = models.CharField(max_length=100, null=True)
+    mxik = models.CharField(max_length=100, null=True)
+    package_code = models.CharField(max_length=100, null=True)
 
     def __str__(self):
         return self.name
