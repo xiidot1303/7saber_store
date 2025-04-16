@@ -93,13 +93,13 @@ def fetch_categories():
     
     for category in categories:
         category_id = category.get("id")
-        category_obj: Category = Category.objects.get_or_create(billz_id=category_id)
+        category_obj, created = Category.objects.get_or_create(billz_id=category_id)
         category_obj.name = category.get("name")
         category_obj.save()
 
         for subcategory in category.get("subRows", []):
             subcategory_id = subcategory.get("id")
-            subcategory: Subcategory = Subcategory.objects.get_or_create(billz_id=subcategory_id)
+            subcategory, created = Subcategory.objects.get_or_create(billz_id=subcategory_id)
             subcategory.category = category_obj
             subcategory.name = subcategory.get("name")
             subcategory.save()
