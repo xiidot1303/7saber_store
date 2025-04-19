@@ -8,7 +8,7 @@ async def receipts_create_api(payment_id, amount):
     """
     method = "receipts.create"
     params = {
-        "amount": amount * 100,
+        "amount": int(amount * 100),
         "account": {
             "account_id": str(payment_id)
         }

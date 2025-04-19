@@ -1,4 +1,5 @@
 from django.db import models
+from asgiref.sync import sync_to_async
 
 class Category(models.Model):
     billz_id = models.CharField(max_length=128, null=True)
@@ -97,6 +98,11 @@ class Order(models.Model):
 
     def __str__(self):
         return f"Order {self.id} by {self.customer.first_name}"
+
+    @property
+    @sync_to_async
+    def get_bot_user(self):
+        return self.bot_user
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
