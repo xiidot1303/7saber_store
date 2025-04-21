@@ -40,6 +40,7 @@ urlpatterns = [
 
     # order API
     path('api/order/', OrderView.as_view(), name='order'),
+    path('api/order', OrderView.as_view(), name='order'),
 
     # delivery types API
     path('api/deliverytypes/', DeliveryTypeListView.as_view(), name='delivery-type-list'),
