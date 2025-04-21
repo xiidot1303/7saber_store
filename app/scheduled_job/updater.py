@@ -11,7 +11,7 @@ class jobs:
     scheduler.add_jobstore(DjangoJobStore(), 'djangojobstore')
     register_events(scheduler)
     scheduler.add_job(fetch_and_cache_access_token, 'interval', days=10)
-    scheduler.add_job(fetch_subcategories, 'cron', hour=2, minute=0)
+    scheduler.add_job(fetch_categories, 'cron', hour=2, minute=0)
     scheduler.add_job(fetch_products, 'cron', hour=2, minute=10)
 
     # bot
