@@ -6,6 +6,7 @@ from app.models import Category, Subcategory, Product
 from app.serializers import CategorySerializer, SubcategorySerializer, ProductSerializer
 from django.conf import settings
 from urllib.parse import quote
+from django.db.models import Min, Max
 
 class CategoryListView(generics.ListAPIView):
     queryset = Category.objects.all()
@@ -62,3 +63,11 @@ class ProductDetailView(APIView):
             return Response(product_data, status=status.HTTP_200_OK)
         except Product.DoesNotExist:
             return Response({'error': 'Product not found'}, status=status.HTTP_404_NOT_FOUND)
+
+class ProductPriceRangeView(APIView):
+    def get(self, request):
+        price_range = Product.objects.aggregate(
+            min_price=Min('price'),
+            max_price=Max('price')
+        )
+        return Response(price_range, status=status.HTTP_200_OK)

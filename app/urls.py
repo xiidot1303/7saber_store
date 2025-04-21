@@ -9,7 +9,7 @@ from django.contrib.auth.views import (
 from app.views import (
     main
 )
-from app.views.product import CategoryListView, SubcategoryListView, ProductListView, ProductDetailView
+from app.views.product import CategoryListView, SubcategoryListView, ProductListView, ProductDetailView, ProductPriceRangeView
 from app.views.order import OrderView
 from app.views.delivery import DeliveryTypeListView
 from app.views.banner import BannerListView  # Add import
@@ -46,4 +46,7 @@ urlpatterns = [
 
     # banner API
     path('api/banners/', BannerListView.as_view(), name='banner-list'),
+
+    # product price range API
+    path('products/price-range/', ProductPriceRangeView.as_view(), name='product-price-range'),
 ]
