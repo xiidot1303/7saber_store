@@ -10,7 +10,7 @@ from bot.services.notification_service import send_invoice_to_user, send_order_i
 @receiver(post_save, sender=Order)
 def handle_cash_payment_order(sender, instance: Order, created, **kwargs):
     if created and instance.payment_method == "cash":
-        async_to_sync(order_pay)(instance.id)
+        async_to_sync(order_pay)(instance, "cash")
     elif created:
         # send invoice to user with order information
         send_invoice_to_user.delay(instance.id)
