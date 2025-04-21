@@ -35,3 +35,5 @@ CLICK_SERVICE_ID = os.environ.get("CLICK_SERVICE_ID")
 CLICK_MERCHANT_ID = os.environ.get("CLICK_MERCHANT_ID")
 CLICK_SECRET_KEY = os.environ.get("CLICK_SECRET_KEY")
 CLICK_MERCHANT_USER_ID = os.environ.get("CLICK_MERCHANT_USER_ID")
+
+GROUP_ID = os.environ.get("GROUP_ID")

@@ -95,6 +95,7 @@ class Order(models.Model):
     payed = models.BooleanField(default=False)
     payment_system = models.CharField(max_length=50, blank=True, null=True)
     status = models.CharField(max_length=50, null=True, blank=True)
+    sent_to_group = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Order {self.id} by {self.customer.first_name}"
