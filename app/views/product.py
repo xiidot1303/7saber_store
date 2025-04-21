@@ -83,3 +83,13 @@ class ProductPriceRangeView(APIView):
             max_price=Max('price')
         )
         return Response(price_range, status=status.HTTP_200_OK)
+
+class ProductFilterByTitleView(APIView):
+    def post(self, request):
+        title = request.data.get('title', '')
+        if not title:
+            return Response({'error': 'Title is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+        products = Product.objects.filter(name__icontains=title)
+        serialized_products = ProductSerializer(products, many=True).data
+        return Response(serialized_products, status=status.HTTP_200_OK)
