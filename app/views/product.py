@@ -24,7 +24,19 @@ class ProductListView(generics.ListAPIView):
 
     def get_queryset(self):
         subcategory_id = self.kwargs['subcategory_id']
-        return Product.objects.filter(subcategory_id=subcategory_id)
+        queryset = Product.objects.filter(subcategory_id=subcategory_id)
+
+        # Get min_price and max_price from query parameters
+        min_price = self.request.query_params.get('min_price')
+        max_price = self.request.query_params.get('max_price')
+
+        # Filter by price range if provided
+        if min_price is not None:
+            queryset = queryset.filter(price__gte=min_price)
+        if max_price is not None:
+            queryset = queryset.filter(price__lte=max_price)
+
+        return queryset
 
 class ProductDetailView(APIView):
     def get(self, request, product_id):
