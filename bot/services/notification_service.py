@@ -4,17 +4,21 @@ from bot.control.updater import application
 from app.models import Order, OrderItem
 from payment.services import get_invoice_url
 from config import GROUP_ID
+from asgiref.sync import async_to_sync
+from celery import shared_task
+import requests
+from config import WEBHOOK_URL
 
 
-async def send_invoice_to_user(order: Order):
-    bot_user: Bot_user = await order.get_bot_user
+@shared_task
+def send_invoice_to_user(order_id):
+    order: Order = Order.objects.get(id=order_id)
+    bot_user: Bot_user = order.bot_user
     strings = Strings(user_id=bot_user.user_id)
 
-    order_items = await sync_to_async(list)(
-        order.items.values(
+    order_items = list(order.items.values(
             'product__name', 'color__color', 'size__size', 'quantity', 'price'
-        )
-    )
+        ))
     items_text = "\n".join([
         strings.invoice_item.format(
             product=item['product__name'],
@@ -38,23 +42,25 @@ async def send_invoice_to_user(order: Order):
         [[
             InlineKeyboardButton(
                 text=strings.pay,
-                url=await get_invoice_url(order.pk, order.total, order.payment_method)
+                url=async_to_sync(get_invoice_url)(order.pk, order.total, order.payment_method)
             )
         ]]
     )
-    await application.update_queue.put(
-        NewsletterUpdate(
-            user_id=bot_user.user_id,
-            text=text,
-            reply_markup=markup,
-        )
+    async_to_sync(application.bot.send_message)(
+        chat_id=bot_user.user_id,
+        text=text,
+        reply_markup=markup,
+        parse_mode=ParseMode.HTML
     )
 
+    
 
-async def send_order_info_to_group(order: Order):
-    bot_user: Bot_user = await order.get_bot_user
+@shared_task
+def send_order_info_to_group(order_id: int):
+    order: Order = Order.objects.get(id=order_id)
+    bot_user: Bot_user = order.bot_user
 
-    order_items = await sync_to_async(list)(
+    order_items = list(
         order.items.values(
             'product__name', 'color__color', 'size__size', 'quantity', 'price'
         )
@@ -84,10 +90,8 @@ async def send_order_info_to_group(order: Order):
         f"🔹 Дата регистрации: {bot_user.date.strftime('%Y-%m-%d %H:%M:%S')}\n"
     )
 
-
-    await application.update_queue.put(
-        NewsletterUpdate(
-            user_id=GROUP_ID,
-            text=text,
-        )
+    async_to_sync(application.bot.send_message)(
+        chat_id=GROUP_ID,
+        text=text,
+        parse_mode=ParseMode.HTML
     )
