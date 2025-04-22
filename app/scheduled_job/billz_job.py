@@ -47,7 +47,7 @@ def fetch_products():
 
                 photo = None
                 for p in product.get("photos"):
-                    if not p['is_main']:
+                    if p['is_main']:
                         photo = p['photo_url']
                         break
                 if product_attributes:=product['product_attributes']:
