@@ -33,6 +33,7 @@ def fetch_products():
                 main_photo = product.get("main_image_url_full")
                 quantity = product['shop_measurement_values'][0]['active_measurement_value']
                 # get price
+                price = 0
                 for shop_price in product.get("shop_prices", []):
                     if shop_price['shop_id'] == "e522e356-c449-4e33-8ad3-b7177622ef7a":
                         price = shop_price['retail_price']
