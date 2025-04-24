@@ -51,8 +51,8 @@ def fetch_products():
                     if p['is_main']:
                         photo = p['photo_url']
                         break
+                size, color = None, None
                 if product_attributes:=product['product_attributes']:
-                    size, color = None, None
                     if product_attributes[0]['attribute_id'] == '6fdcfa5f-42b4-406e-b0fd-712ad011aa5c':
                         size = product_attributes[0]['attribute_value']
                         color = product_attributes[1]['attribute_value']
