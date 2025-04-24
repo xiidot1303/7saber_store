@@ -40,11 +40,13 @@ def fetch_products():
                         break
                 
                 # get mxik and package code
-                for custom_field in product.get("custom_fields", []):
-                    if custom_field["custom_field_id"] == "6d903c74-bee3-48d8-8ca8-d2344df1ffd7":
-                        mxik = custom_field["custom_field_value"]
-                    elif custom_field["custom_field_id"] == "f9a0e2a8-9d5e-4059-ac32-76a9c5ae1656":
-                        package_code = custom_field["custom_field_value"]
+                mxik, package_code = None, None
+                if custom_fields:=product.get("custom_fields", []):
+                    for custom_field in custom_fields:
+                        if custom_field["custom_field_id"] == "6d903c74-bee3-48d8-8ca8-d2344df1ffd7":
+                            mxik = custom_field["custom_field_value"]
+                        elif custom_field["custom_field_id"] == "f9a0e2a8-9d5e-4059-ac32-76a9c5ae1656":
+                            package_code = custom_field["custom_field_value"]
 
                 photo = None
                 for p in product.get("photos"):
