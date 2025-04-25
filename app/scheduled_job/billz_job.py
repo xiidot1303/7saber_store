@@ -55,12 +55,13 @@ def fetch_products():
                         break
                 size, color = None, None
                 if product_attributes:=product['product_attributes']:
-                    if product_attributes[0]['attribute_id'] == '6fdcfa5f-42b4-406e-b0fd-712ad011aa5c':
-                        size = product_attributes[0]['attribute_value']
-                        color = product_attributes[1]['attribute_value']
-                    else:
-                        size = product_attributes[1]['attribute_value']
-                        color = product_attributes[0]['attribute_value']
+                    if len(product_attributes) >=2:
+                        if product_attributes[0]['attribute_name'] == 'Размер':
+                            size = product_attributes[0]['attribute_value']
+                            color = product_attributes[1]['attribute_value']
+                        else:
+                            size = product_attributes[1]['attribute_value']
+                            color = product_attributes[0]['attribute_value']
 
                 subcategory: Subcategory = Subcategory.objects.filter(billz_id=subcategory_id).first()
                 product, is_created = Product.objects.get_or_create(billz_parent_id=parent_id)
