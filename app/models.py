@@ -57,7 +57,7 @@ class ProductColor(models.Model):
 
 class ProductSize(models.Model):
     product_color = models.ForeignKey(ProductColor, related_name='sizes', on_delete=models.CASCADE)
-    size = models.CharField(max_length=10, null=True)
+    size = models.CharField(max_length=255, null=True)
     dimensions = models.CharField(max_length=10, null=True)
     quantity = models.PositiveIntegerField(null=True)
     weight = models.DecimalField(max_digits=5, decimal_places=0, null=True)
