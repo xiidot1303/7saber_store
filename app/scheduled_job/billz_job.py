@@ -28,7 +28,7 @@ def fetch_products():
         if products:=response_data.get("products", []):
             for product in products:
                 parent_id = product.get("parent_id")
-                subcategory_id = product['categories'][0]['id']
+                subcategory_id = product['categories'][0]['id'] if product['categories'] else None
                 name = product.get("name").split("/")[0].strip()
                 main_photo = product.get("main_image_url_full")
                 quantity = product['shop_measurement_values'][0]['active_measurement_value']
