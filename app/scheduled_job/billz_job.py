@@ -63,6 +63,8 @@ def fetch_products():
                             size = product_attributes[1]['attribute_value']
                             color = product_attributes[0]['attribute_value']
 
+                        color = color.split(" ")[0].strip()
+
                 subcategory: Subcategory = Subcategory.objects.filter(billz_id=subcategory_id).first()
                 product, is_created = Product.objects.get_or_create(billz_parent_id=parent_id)
                 product.subcategory = subcategory
