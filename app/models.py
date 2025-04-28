@@ -8,6 +8,7 @@ class Category(models.Model):
     name_ru = models.CharField(max_length=255, blank=True, null=True)
     name_en = models.CharField(max_length=255, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
+    index = models.IntegerField(unique=True, null=True)
 
     def __str__(self):
         return self.name

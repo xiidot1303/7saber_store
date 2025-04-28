@@ -9,7 +9,7 @@ from urllib.parse import quote
 from django.db.models import Min, Max
 
 class CategoryListView(generics.ListAPIView):
-    queryset = Category.objects.all()
+    queryset = Category.objects.filter().order_by('index')
     serializer_class = CategorySerializer
 
 class SubcategoryListView(generics.ListAPIView):

@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import Category, Subcategory, Product, ProductColor, ProductSize, DeliveryType, Customer, Order, OrderItem, Banner
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'name_uz', 'name_ru', 'name_en', 'description')
+    list_display = ('name', 'name_uz', 'name_ru', 'name_en', 'index', 'description')
     search_fields = ('name', 'name_uz', 'name_ru', 'name_en')
 
 class SubcategoryAdmin(admin.ModelAdmin):
