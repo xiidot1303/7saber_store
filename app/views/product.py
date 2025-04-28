@@ -17,7 +17,11 @@ class SubcategoryListView(generics.ListAPIView):
 
     def get_queryset(self):
         category_id = self.kwargs['category_id']
-        return Subcategory.objects.filter(category_id=category_id)
+        if category_id:
+            result = Subcategory.objects.filter(category_id=category_id)
+        else:
+            result = Subcategory.objects.all()
+        return 
 
 class ProductListView(generics.ListAPIView):
     serializer_class = ProductSerializer
