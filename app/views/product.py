@@ -21,7 +21,7 @@ class SubcategoryListView(generics.ListAPIView):
             result = Subcategory.objects.filter(category_id=category_id)
         else:
             result = Subcategory.objects.all()
-        return 
+        return result
 
 class ProductListView(generics.ListAPIView):
     serializer_class = ProductSerializer
