@@ -18,9 +18,9 @@ class SubcategoryListView(generics.ListAPIView):
     def get_queryset(self):
         category_id = self.kwargs.get('category_id', None)
         if category_id:
-            result = Subcategory.objects.filter(category_id=category_id)
+            result = Subcategory.objects.filter(category_id=category_id, products__isnull=False).distinct()
         else:
-            result = Subcategory.objects.all()
+            result = Subcategory.objects.filter(products__isnull=False).distinct()
         return result
 
 class ProductListView(generics.ListAPIView):
