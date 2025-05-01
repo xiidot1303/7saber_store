@@ -31,13 +31,22 @@ def fetch_products():
                 subcategory_id = product['categories'][0]['id'] if product['categories'] else None
                 name = product.get("name").split("/")[0].strip()
                 main_photo = product.get("main_image_url_full")
-                quantity = product['shop_measurement_values'][0]['active_measurement_value']
+                # get quantity
+                quantity = None
+                for shop_measurement in product.get("shop_measurement_values", []):
+                    if shop_measurement['shop_name'] == "Телеграмм бот":
+                        quantity = shop_measurement['active_measurement_value']
+                        break
+                if not quantity:
+                    continue
                 # get price
-                price = 0
+                price = None
                 for shop_price in product.get("shop_prices", []):
-                    if shop_price['shop_id'] == "e522e356-c449-4e33-8ad3-b7177622ef7a":
+                    if shop_price['shop_name'] == "Телеграмм бот":
                         price = shop_price['retail_price']
                         break
+                if not price:
+                    continue
                 
                 # get mxik and package code
                 mxik, package_code = None, None
