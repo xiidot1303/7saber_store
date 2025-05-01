@@ -31,6 +31,7 @@ urlpatterns = [
 
     # subcategory list API
     path('api/subcategories/<int:category_id>/', SubcategoryListView.as_view(), name='subcategory-list'),
+    path('api/subcategories/', SubcategoryListView.as_view()),
 
     # product list API
     path('api/products/<int:subcategory_id>/', ProductListView.as_view(), name='product-list'),
