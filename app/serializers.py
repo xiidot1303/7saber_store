@@ -4,7 +4,7 @@ from app.models import Category, Subcategory, Product, DeliveryType, Banner
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ['id', 'name', 'name_uz', 'name_ru', 'name_en', 'description']
+        fields = '__all__'  # Ensure all fields, including `photo`, are serialized
 
 class SubcategorySerializer(serializers.ModelSerializer):
     class Meta:
