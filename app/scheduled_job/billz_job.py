@@ -75,7 +75,7 @@ def fetch_products():
                         color = color.split(" ")[0].strip()
 
                 subcategory: Subcategory = Subcategory.objects.filter(billz_id=subcategory_id).first()
-                product, is_created = Product.objects.get_or_create(billz_parent_id=parent_id)
+                product, is_created = Product.objects.get_or_create(billz_parent_id=parent_id, name=name)
                 product.subcategory = subcategory
                 product.name = name
                 product.price = price
