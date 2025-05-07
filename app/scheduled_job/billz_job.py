@@ -12,7 +12,7 @@ def fetch_and_cache_access_token():
     data = response_data.get("data", {})
     access_token = data.get("access_token")
     if access_token:
-        cache.set("billz_access_token", access_token)
+        cache.set("billz_access_token", access_token, timeout=86400)
     return access_token
 
 
