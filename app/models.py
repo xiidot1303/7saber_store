@@ -36,7 +36,7 @@ class Subcategory(models.Model):
 
 class Product(models.Model):
     subcategory = models.ForeignKey(Subcategory, related_name='products', null=True, on_delete=models.CASCADE, verbose_name="Подкатегория")
-    billz_parent_id = models.CharField(max_length=128, null=True, verbose_name="ID Родителя Billz")
+    billz_parent_id = models.CharField(max_length=128, null=True, blank=True, verbose_name="ID Родителя Billz")
     name = models.CharField(max_length=255, null=True, verbose_name="Название")
     name_uz = models.CharField(max_length=255, blank=True, null=True, verbose_name="Название (узбекский)")
     name_ru = models.CharField(max_length=255, blank=True, null=True, verbose_name="Название (русский)")
